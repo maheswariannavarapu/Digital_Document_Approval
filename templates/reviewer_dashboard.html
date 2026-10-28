@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div style="padding: 0 0.5rem 1rem;">
+      <h3 style="color:#fff; font-size:1.1rem;">Review Workspace</h3>
+      <p style="font-size:0.8rem; color:#a5b4fc;">{{ current_user.full_name }} ({{ current_user.role|capitalize }})</p>
+    </div>
+    <a href="{{ url_for('user_dashboard') }}" class="active">📋 Assigned Tasks</a>
+    <a href="{{ url_for('audit_trail_view') }}">📜 Audit Trail</a>
+    <a href="{{ url_for('logout') }}">🚪 Logout</a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="dash-header">
+      <div>
+        <h1>{{ current_user.role|capitalize }} Decision Portal</h1>
+        <p style="color:#64748b;">Review assigned documents, leave feedback comments, and update multi-tier approval states.</p>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="label">Pending Decisions</div>
+        <div class="value" style="color:#f59e0b;">{{ pending_count }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Completed Sign-offs</div>
+        <div class="value" style="color:#10b981;">{{ completed_count }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Your Role</div>
+        <div class="value" style="font-size:1.3rem; color:#4c35b5;">{{ current_user.role|title }}</div>
+      </div>
+    </div>
+
+    <!-- Assigned Documents Table -->
+    <div class="card-section">
+      <div class="section-head">
+        <h2 style="font-size:1.25rem;">Documents Awaiting Your Review</h2>
+      </div>
+
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Document Name</th>
+            <th>Category</th>
+            <th>Author</th>
+            <th>Version</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for doc in documents %}
+            <tr>
+              <td>
+                <div class="doc-file-info">
+                  <div class="file-icon">DOC</div>
+                  <div>
+                    <strong>{{ doc.title }}</strong><br>
+                    <small style="color:#94a3b8;">{{ doc.file_name }}</small>
+                  </div>
+                </div>
+              </td>
+              <td>{{ doc.category_name or 'General' }}</td>
+              <td>{{ doc.author_name or 'System User' }}</td>
+              <td><span class="badge badge-submitted">{{ doc.current_version }}</span></td>
+              <td>
+                <span class="badge badge-{{ doc.status }}">{{ doc.status|replace('_', ' ')|capitalize }}</span>
+              </td>
+              <td>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                  <a href="{{ url_for('download_file', filename=doc.file_path) }}" class="btn-action-download">
+                    ⬇ Download
+                  </a>
+                  <a href="{{ url_for('review_document', doc_id=doc.id) }}" class="btn-action-review">
+                    ✍ Review & Comment
+                  </a>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="6" style="text-align:center; padding:2.5rem; color:#94a3b8;">
+                No pending documents assigned for your evaluation right now!
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+{% endblock %}

@@ -1,0 +1,239 @@
+/* ==========================================================================
+   DocFlow Operational Dashboard Layout Fix
+   ========================================================================== */
+
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 70px);
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  width: 100%;
+}
+
+/* Left Sidebar */
+.sidebar {
+  width: 250px;
+  background: #191436;
+  color: #cbd5e1;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.sidebar a:hover, 
+.sidebar a.active {
+  background: #4c35b5;
+  color: #ffffff;
+}
+
+/* Main Workspace */
+.main-content {
+  flex: 1;
+  padding: 2.5rem;
+  background: #f8fafc;
+  overflow-y: auto;
+}
+
+/* Dashboard Header */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dash-header h1 {
+  font-size: 1.8rem;
+  color: #0f172a;
+  margin-bottom: 0.3rem;
+}
+
+/* Metric Cards Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+}
+
+.stat-card .label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 0.4rem;
+}
+
+.stat-card .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e1b4b;
+}
+
+/* Table Card Section */
+.card-section {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.doc-table th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 1.5px solid #f1f5f9;
+}
+
+.doc-table td {
+  padding: 1.1rem 1rem;
+  border-bottom: 1px solid #f8fafc;
+  font-size: 0.92rem;
+  vertical-align: middle;
+  color: #334155;
+}
+
+/* Action Buttons */
+.btn-upload-solid {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+  padding: 0.65rem 1.4rem !important;
+  border-radius: 8px !important;
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25) !important;
+  transition: all 0.2s ease;
+}
+
+.btn-upload-solid:hover {
+  background-color: #4338ca !important;
+  transform: translateY(-1px);
+}
+
+.btn-action-download {
+  display: inline-flex;
+  align-items: center;
+  background-color: #0284c7;
+  color: #ffffff !important;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-action-review {
+  background: #10b981;
+  color: #ffffff !important;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.btn-action-assign {
+  background: #4c35b5;
+  color: #ffffff;
+  border: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.badge-submitted { background: #e0f2fe; color: #0369a1; }
+.badge-in_review { background: #fef3c7; color: #b45309; }
+.badge-manager_review { background: #f3e8ff; color: #7e22ce; }
+.badge-final_review { background: #ffedd5; color: #c2410c; }
+.badge-approved { background: #dcfce7; color: #15803d; }
+.badge-rejected { background: #fee2e2; color: #b91c1c; }
+
+/* Modal Popup Fix (Idhi main: bayataki kanipinche issue fix chestundi) */
+.modal-overlay {
+  display: none !important;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  display: flex !important;
+}
+
+.modal-box {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+}

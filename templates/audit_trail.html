@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-container" style="padding:2.5rem 3.5rem;">
+  <div style="width:100%;">
+    <div class="dash-header">
+      <div>
+        <h1>Comprehensive Audit Trail</h1>
+        <p style="color:#64748b;">Complete chronological history of actions, approvals, logins, and status updates.</p>
+      </div>
+      <a href="{{ url_for('user_dashboard') }}" class="btn-auth-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="card-section">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Action</th>
+            <th>Performed By</th>
+            <th>Role</th>
+            <th>Target Document</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+            <tr>
+              <td style="color:#64748b; font-size:0.85rem;">{{ log.created_at }}</td>
+              <td><strong>{{ log.action }}</strong></td>
+              <td>{{ log.user_name or 'System' }}</td>
+              <td><span class="badge badge-archived">{{ log.role or 'N/A' }}</span></td>
+              <td>{{ log.doc_title or 'System Level' }}</td>
+              <td style="color:#475569; font-size:0.88rem;">{{ log.details or '-' }}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="6" style="text-align:center; padding:2rem; color:#94a3b8;">No audit entries logged yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-container" style="padding:1.5rem 2.5rem;">
+  <div style="width:100%;">
+    <div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <a href="{{ url_for('user_dashboard') }}" style="color:#64748b; text-decoration:none; font-size:0.9rem;">&larr; Back to Dashboard</a>
+        <h2 style="font-size:1.6rem; color:#0f172a; margin-top:0.3rem;">Document Review & Workflow Decision</h2>
+      </div>
+      <div>
+        <a href="{{ url_for('download_file', filename=doc.file_path) }}" class="btn-action-download" style="padding: 0.6rem 1.2rem;">
+          ⬇ Download Original File
+        </a>
+      </div>
+    </div>
+
+    <!-- Split Screen Document Review -->
+    <div class="review-split-container">
+      <!-- Left Panel: Live Document Preview -->
+      <div class="pdf-preview-pane">
+        <div class="preview-header">
+          <div>
+            <h3 style="font-size:1.1rem; color:#1e1b4b;">{{ doc.file_name }}</h3>
+            <span style="font-size:0.8rem; color:#64748b;">Title: {{ doc.title }} &bull; Author: {{ doc.author_name }}</span>
+          </div>
+          <span class="badge badge-{{ doc.status }}">{{ doc.status|replace('_', ' ')|capitalize }}</span>
+        </div>
+
+        {% if doc.file_name.lower().endswith(('.png', '.jpg', '.jpeg')) %}
+          <img src="{{ url_for('serve_upload', filename=doc.file_path) }}" alt="Preview" style="max-height: 600px; object-fit: contain; border-radius: 8px;">
+        {% else %}
+          <iframe class="pdf-embed" src="{{ url_for('serve_upload', filename=doc.file_path) }}"></iframe>
+        {% endif %}
+      </div>
+
+      <!-- Right Panel: Review Decision & Comments Timeline -->
+      <div class="review-form-pane">
+        <div>
+          <h3 style="font-size:1.2rem; color:#1e1b4b; margin-bottom:0.3rem;">Submit Decision</h3>
+          <p style="font-size:0.85rem; color:#64748b;">
+            Logged in as: <strong style="color:#4c35b5;">{{ current_user.full_name }} ({{ current_user.role|title }})</strong>
+          </p>
+        </div>
+
+        <!-- Decision Form -->
+        <form method="POST">
+          <div class="form-group">
+            <label>Reviewer / Manager Comments & Feedback</label>
+            <textarea name="notes" class="form-input" rows="4" placeholder="Enter evaluation feedback, changes required, or approval confirmation..." required></textarea>
+          </div>
+
+          <div class="decision-actions">
+            <button type="submit" name="decision" value="approved" class="btn-approve">Approve Stage</button>
+            <button type="submit" name="decision" value="rejected" class="btn-reject">Reject Document</button>
+          </div>
+        </form>
+
+        <!-- Threaded Comments Timeline -->
+        <div style="margin-top: 1rem;">
+          <h4 style="font-size:1rem; margin-bottom:0.75rem; color:#334155;">Document Review History & Remarks</h4>
+          <div class="comments-timeline">
+            {% for c in comments %}
+              <div class="comment-card">
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#64748b; margin-bottom:0.25rem;">
+                  <strong>{{ c.full_name }} ({{ c.role|title }})</strong>
+                  <span>{{ c.created_at }}</span>
+                </div>
+                <p style="font-size:0.88rem; color:#1e293b; margin: 0;">{{ c.comment }}</p>
+              </div>
+            {% else %}
+              <p style="font-size:0.85rem; color:#94a3b8; text-align:center; padding:1.5rem;">No remarks or reviewer notes submitted yet.</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

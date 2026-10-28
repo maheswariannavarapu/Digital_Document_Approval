@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-container" style="justify-content:center; padding:3rem 1rem;">
+  <div class="card-section" style="max-width: 600px; width:100%;">
+    <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Upload Document</h2>
+    <p style="color:#64748b; margin-bottom:1.8rem; font-size:0.92rem;">
+      Upload a document into the workflow. It will automatically initiate version <strong>v1.0</strong>.
+    </p>
+
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Document Title</label>
+        <input type="text" name="title" class="form-input" placeholder="e.g. Project Proposal 2026" required>
+      </div>
+
+      <div class="form-group">
+        <label>Document Category</label>
+        <select name="type_id" class="form-input" required>
+          {% for t in types %}
+            <option value="{{ t.id }}">{{ t.name }} - {{ t.description }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description / Objective</label>
+        <textarea name="description" class="form-input" rows="3" placeholder="Brief context for reviewers..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Choose File (PDF, DOCX, PNG, JPG)</label>
+        <input type="file" name="file" class="form-input" required>
+      </div>
+
+      <div class="auth-actions-row">
+        <button type="submit" class="btn-auth-primary">Start Workflow</button>
+        <a href="{{ url_for('user_dashboard') }}" class="btn-auth-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
