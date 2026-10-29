@@ -189,3 +189,22 @@ window.addEventListener('click', function(event) {
 });
 </script>
 {% endblock %}
+
+<script>
+function openAssignModal(docId, docTitle) {
+  const modal = document.getElementById('assignModal');
+  const idInput = document.getElementById('assignDocId');
+  const titleText = document.getElementById('assignDocTitle');
+
+  if (modal) {
+    if (idInput) idInput.value = docId;
+    if (titleText) titleText.innerText = "Document: " + docTitle;
+    modal.style.display = 'flex';
+  }
+}
+
+function closeAssignModal() {
+  const modal = document.getElementById('assignModal');
+  if (modal) modal.style.display = 'none';
+}
+</script>
