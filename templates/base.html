@@ -27,8 +27,18 @@
         <span style="color: #cbd5e1; font-size: 0.9rem;">
           hello, <strong style="color: #fff;">{{ current_user.full_name }}</strong>
         </span>
-        <a href="{{ url_for('user_dashboard') }}" style="color: #a5b4fc; font-weight: 600; margin-left: 8px;">Dashboard</a>
-        <a href="{{ url_for('logout') }}" style="color: #f87171; font-weight: 600; margin-left: 8px;">Logout</a>
+
+        {% if current_user.role == 'admin' %}
+          <a href="{{ url_for('admin_dashboard') }}" style="color: #a5b4fc; font-weight: 600; margin-left: 8px;">Dashboard</a>
+        {% else %}
+          <a href="{{ url_for('user_dashboard') }}" style="color: #a5b4fc; font-weight: 600; margin-left: 8px;">Dashboard</a>
+        {% endif %}
+
+        <!-- యూజర్ లేదా అడ్మిన్ లాగిన్ అయి ఉన్నప్పుడు నేరుగా Logout బటన్ మాత్రమే కనిపిస్తుంది -->
+        <a href="{{ url_for('logout') }}" class="btn-nav-primary" style="margin-left: 10px; background: #ef4444; color: #fff;">
+          Logout
+        </a>
+
       {% else %}
         <a href="{{ url_for('home') }}">Home</a>
         <a href="#">About Us</a>
