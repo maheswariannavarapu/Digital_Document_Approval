@@ -93,7 +93,9 @@ Reviewers and managers sign in through the same user login (`/login`), while the
 
 ### Workflow Diagram
 
-![DocFlow Workflow Diagram](images/workflow_diagram.png width="400")
+| Workflow Diagram |
+| :---: |
+| ![DocFlow Workflow](images/workflow_diagram.png) |
 
 ### Workflow Description
 
